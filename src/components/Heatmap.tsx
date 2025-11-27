@@ -2,7 +2,6 @@ import useGetContributions from "../api/useGetContributions";
 import ReactECharts from "echarts-for-react";
 import { useMemo } from "react";
 import ActivityOverview from "./ActivityOverview";
-import ContributionActivity from "./ContributionActivity";
 import ContributedTo from "./ContributedTo";
 import CustomDivider from "./Divider";
 import { colors } from "../assets/colors";
