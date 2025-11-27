@@ -23,11 +23,11 @@ const Tabs: React.FC<TabProps> = ({ tabs, onTabChange, className = "" }) => {
   const currentActiveTab = searchParams?.get("activeTab");
 
   return (
-    <div className={`flex flex-col gap-4 flex-1`}>
+    <div className={`flex flex-col flex-1`}>
       <div
         className={`
-          flex items-center gap-2 overflow-x-auto hide-scrollbar
-          border-b-3 border-secondary-light
+          flex items-center gap-2 overflow-x-auto hide-scrollbar px-4
+          border-b border-secondary-dark
           ${className}
         `}
       >
@@ -46,7 +46,7 @@ const Tabs: React.FC<TabProps> = ({ tabs, onTabChange, className = "" }) => {
               onTabChange?.(tab.value);
             }}
             className={`
-              flex items-center gap-2 flex-shrink-0 text-primary text-[1.2rem] py-2 px-3
+              flex items-center gap-2 flex-shrink-0 text-primary text-[1rem] py-2 px-3
               hover:bg-secondary-light cursor-pointer 
               ${
                 currentActiveTab === tab.value ||
@@ -59,7 +59,7 @@ const Tabs: React.FC<TabProps> = ({ tabs, onTabChange, className = "" }) => {
               <img
                 src={tab.icon}
                 alt={tab.label}
-                className="w-6 h-6 object-contain"
+                className="w-4 h-4 object-contain"
               />
             )}
             {tab.label}
