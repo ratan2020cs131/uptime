@@ -13,6 +13,7 @@ import Divider from "../components/Divider";
 import { colors } from "../assets/colors";
 import Badge from "../components/Badge";
 import Repositories from "./Repositories";
+import Contributions from "./Contributions";
 
 const socialIconMap = {
   twitter: xIcon,
@@ -101,6 +102,7 @@ const Profile = () => {
 
               {social?.map((item) => (
                 <p
+                  key={item.url}
                   className="cursor-pointer hover:underline flex items-center gap-2 text-primary text-[1rem] leading-[1.25rem]"
                   onClick={() => window.open(item.url || "", "_blank")}
                 >
@@ -152,8 +154,9 @@ const Profile = () => {
             </span>
           </div>
 
-          <div className="flex flex-col gap-4 flex-1 min-w-[28rem] max-w-[56rem] h-[100] py-8">
+          <div className="flex flex-col gap-8 flex-1 min-w-[28rem] max-w-[56rem] h-[100] py-8">
             <Repositories />
+            <Contributions />
           </div>
         </>
       )}

@@ -15,33 +15,40 @@
 
 ::-webkit-scrollbar {
   width: 0.45rem;
-  /* Width of the scrollbar */
   height: 0.45rem;
-  /* Height of the scrollbar (for horizontal scrollbars) */
 }
 
 ::-webkit-scrollbar-track {
-  background: #f0f0f0;
-  /* Track color */
+  background: transparent;
   border-radius: 0.5rem;
-  /* Optional: round track edges */
-  box-shadow: inset 0 0 3px #00000050;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #88888870;
-  /* Thumb color */
+  background: transparent;
   border-radius: 10px;
-  /* Round thumb edges */
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #888888;
-  /* Darker thumb color on hover */
+  background: #888888aa;
 }
 
 ::-webkit-scrollbar-button {
   display: none;
+}
+
+/* Show scrollbar on hover */
+*:hover::-webkit-scrollbar-thumb {
+  background: #88888870;
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
+  background: #888888;
+}
+
+*:hover::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  box-shadow: inset 0 0 3px #00000050;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -53,4 +60,49 @@
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+/* Show scrollbar only when scrolling */
+.scroll-on-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.3s ease;
+}
+
+.scroll-on-scroll::-webkit-scrollbar {
+  width: 0.45rem;
+  height: 0.45rem;
+}
+
+.scroll-on-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 0.5rem;
+}
+
+.scroll-on-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.scroll-on-scroll:hover::-webkit-scrollbar-thumb,
+.scroll-on-scroll:active::-webkit-scrollbar-thumb {
+  background: #88888870;
+}
+
+.scroll-on-scroll:hover::-webkit-scrollbar-thumb:hover,
+.scroll-on-scroll:active::-webkit-scrollbar-thumb:active {
+  background: #888888;
+}
+
+.scroll-on-scroll:hover::-webkit-scrollbar-track,
+.scroll-on-scroll:active::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  box-shadow: inset 0 0 3px #00000050;
+}
+
+/* Firefox */
+.scroll-on-scroll:hover,
+.scroll-on-scroll:active {
+  scrollbar-color: #88888870 #f0f0f0;
 }

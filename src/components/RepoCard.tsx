@@ -17,7 +17,7 @@ const RepoCard = ({ repo }: { repo: Repository }) => {
   return (
     <div className="flex flex-col gap-3 border border-secondary-dark rounded-md p-3">
       <span>
-        <span className="flex justify-between">
+        <span className="flex justify-between items-start">
           <a
             className="text-primary-link font-semibold text-[0.85rem] hover:underline"
             href={repo.html_url}
@@ -39,7 +39,7 @@ const RepoCard = ({ repo }: { repo: Repository }) => {
               href={repoData?.parent?.html_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline inline hover:text-primary-link"
+              className="underline inline hover:text-primary-link active:text-primary-link"
             >
               {repoData?.parent?.full_name}
             </a>

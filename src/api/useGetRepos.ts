@@ -1,6 +1,8 @@
 import { useQuery, type UseQueryResult } from "@tanstack/react-query";
 import axios from "axios";
 
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
+
 interface Owner {
   login: string;
   id: number;
@@ -120,7 +122,12 @@ const useGetRepos = (username: string): UseQueryResult<Repos, Error> => {
     queryKey: ["repos", username],
     queryFn: async () => {
       const response = await axios.get(
-        `https://api.github.com/users/${username}/repos`
+        `https://api.github.com/users/${username}/repos`,
+        {
+          headers: {
+            Authorization: `Bearer ${GITHUB_TOKEN}`,
+          },
+        }
       );
       return response.data;
     },

@@ -6,8 +6,6 @@ const Repositories = () => {
   const { user_name = "shreeramk" } = useParams();
   const { data: repos } = useGetRepos(user_name);
 
-  console.log({ repos: repos?.length });
-
   const getTopRepos = () => {
     if (!repos) return [];
 
