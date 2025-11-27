@@ -26,13 +26,13 @@ const Profile = () => {
   const { data: social } = useGetSocial(user_name);
 
   return (
-    <div className="flex-1 h-full flex flex-col md:flex-row justify-center gap-6 px-4">
+    <div className="flex-1 h-full flex flex-col md:flex-row justify-center md:gap-6 px-4">
       {isLoading && <div>Loading...</div>}
       {!user ? (
         !isLoading && <div>User not found</div>
       ) : (
         <>
-          <div className="flex flex-col gap-4 w-full md:max-w-[18rem] h-[100] flex-shrink-0 py-8">
+          <div className="flex flex-col gap-4 w-full md:max-w-[18rem] flex-shrink-0 py-4 md:py-8">
             <div className="flex items-center md:items-start md:flex-col gap-4">
               <span className="rounded-full overflow-hidden">
                 <img
@@ -154,7 +154,7 @@ const Profile = () => {
             </span>
           </div>
 
-          <div className="flex flex-col gap-8 flex-1 min-w-[28rem] max-w-[56rem] h-[100] py-8">
+          <div className="flex flex-col gap-8 flex-1 w-full md:w-auto md:min-w-[0] md:max-w-[56rem] py-4 md:py-8">
             <Repositories />
             <Contributions />
           </div>

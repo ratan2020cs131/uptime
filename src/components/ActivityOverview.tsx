@@ -141,8 +141,7 @@ const ActivityOverview = ({ username, year }: ActivityOverviewProps) => {
 
   if (!activityStats || chartData.length === 0) {
     return (
-      <div className="h-full flex flex-col">
-        <h3 className="text-primary font-semibold mb-3">Activity overview</h3>
+      <div className="h-full flex flex-col min-h-[5rem]">
         {isLoading && (
           <div className="text-primary-dark text-sm py-8 text-center flex-1 flex items-center justify-center">
             Loading activity...

@@ -25,7 +25,7 @@ const Navbar = () => {
 
       <img src={gitLogo} alt="logo" className="w-6 h-6" />
       {user_name && (
-        <span className="cursor-pointer text-primary text-[1rem] font-semibold">
+        <span className="cursor-pointer text-primary text-[1rem] font-semibold truncate">
           {user?.login}
         </span>
       )}

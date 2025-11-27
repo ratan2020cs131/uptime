@@ -17,7 +17,6 @@ interface ContributionDay {
 }
 
 interface Activity {
-  totalRepositoriesWithContributions: number;
   totalCommitContributions: number;
   totalIssueContributions: number;
   totalPullRequestContributions: number;
@@ -51,7 +50,6 @@ const useGetContributionActivity = (username: string, year: number) => {
             query($username: String!, $from: DateTime!, $to: DateTime!) {
               user(login: $username) {
                 contributionsCollection(from: $from, to: $to) {
-                  totalRepositoriesWithContributions
                   totalCommitContributions
                   totalIssueContributions
                   totalPullRequestContributions
@@ -66,7 +64,7 @@ const useGetContributionActivity = (username: string, year: number) => {
                       }
                     }
                   }
-                  commitContributionsByRepository(maxRepositories: 5) {
+                  commitContributionsByRepository(maxRepositories: 100) {
                     contributions {
                       totalCount
                     }
@@ -98,4 +96,3 @@ const useGetContributionActivity = (username: string, year: number) => {
 };
 
 export default useGetContributionActivity;
-

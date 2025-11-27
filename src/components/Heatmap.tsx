@@ -3,6 +3,7 @@ import ReactECharts from "echarts-for-react";
 import { useMemo } from "react";
 import ActivityOverview from "./ActivityOverview";
 import ContributionActivity from "./ContributionActivity";
+import ContributedTo from "./ContributedTo";
 import CustomDivider from "./Divider";
 import { colors } from "../assets/colors";
 
@@ -153,24 +154,27 @@ const Heatmap = ({ year, user_name }: { year: number; user_name: string }) => {
           </div>
         )}
 
+        {/* Activity overview section */}
         <CustomDivider
           direction="horizontal"
           fullLength
           color={colors.secondary.dark}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2px_1fr] py-3">
-          <div className="px-3">
-            <ContributionActivity username={user_name} year={year} />
-          </div>
-          <CustomDivider
-            direction="vertical"
-            fullLength
-            color={colors.secondary.dark}
-            className="hidden lg:block"
-          />
-          <div className="px-3">
-            <ActivityOverview username={user_name} year={year} />
+        <div className="p-3">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2px_1fr] gap-4">
+            <div>
+              <ContributedTo username={user_name} year={year} />
+            </div>
+            <CustomDivider
+              direction="vertical"
+              fullLength
+              color={colors.secondary.dark}
+              className="hidden lg:block"
+            />
+            <div>
+              <ActivityOverview username={user_name} year={year} />
+            </div>
           </div>
         </div>
       </>
