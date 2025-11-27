@@ -41,7 +41,9 @@ const Heatmap = ({ year, user_name }: { year: number; user_name: string }) => {
       position: "top",
       formatter: (params: any) => {
         const count = params.data[1];
-        return `${count} contribution${count !== 1 ? "s" : ""}`;
+        const date = new Date(params.data[0]);
+        const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+        return `${count} contribution${count !== 1 ? "s" : ""} on ${formattedDate}`;
       },
       backgroundColor: "rgba(0, 0, 0, 0.8)",
       borderColor: "transparent",
