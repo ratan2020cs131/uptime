@@ -12,6 +12,7 @@ import useGetSocial from "../api/useGetSocial";
 import Divider from "../components/Divider";
 import { colors } from "../assets/colors";
 import Badge from "../components/Badge";
+import Repositories from "./Repositories";
 
 const socialIconMap = {
   twitter: xIcon,
@@ -24,7 +25,7 @@ const Profile = () => {
   const { data: social } = useGetSocial(user_name);
 
   return (
-    <div className="flex-1 h-full flex justify-center gap-4 px-4">
+    <div className="flex-1 h-full flex flex-col md:flex-row justify-center gap-6 px-4">
       {isLoading && <div>Loading...</div>}
       {!user ? (
         !isLoading && <div>User not found</div>
@@ -151,7 +152,9 @@ const Profile = () => {
             </span>
           </div>
 
-          <div className="flex items-center gap-4 flex-1 min-w-[28rem] max-w-[56rem] h-[100] bg-secondary-dark md:block hidden"></div>
+          <div className="flex flex-col gap-4 flex-1 min-w-[28rem] max-w-[56rem] h-[100] py-8">
+            <Repositories />
+          </div>
         </>
       )}
     </div>

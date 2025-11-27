@@ -13,8 +13,8 @@ const IconWrapper = ({
 }) => {
   return (
     <span
-      className={`flex-shrink-0 cursor-pointer hover:bg-secondary-light rounded-md flex items-center justify-center ${
-        border ? "border border-primary p-1" : ""
+      className={`flex-shrink-0 cursor-pointer hover:bg-secondary-light rounded-md flex items-center justify-center active:bg-secondary-light ${
+        border ? "border border-primary-dark p-1" : ""
       } ${className}`}
     >
       <img src={icon} alt={alt} className={`${sizeClasses[size]}`} />

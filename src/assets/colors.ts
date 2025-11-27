@@ -4,6 +4,7 @@ export const colors = {
     light: "#f7f8fa",
     dark: "#616161",
     highlight: "#ec775c",
+    link: "#478be6",
   },
   secondary: {
     DEFAULT: "#000000",
@@ -12,3 +13,5 @@ export const colors = {
     highlight: "#ec775c",
   },
 };
+
+export const highlightColors = ["#74B3C1", "#E68A93", "#81C784", "#D9C179"];

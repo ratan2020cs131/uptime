@@ -11,6 +11,7 @@ import copilotIcon from "../assets/copilotIcon.svg";
 import IconDropdown from "./IconDropdown";
 import Divider from "./Divider";
 import SearchBar from "./SearchBar";
+import { colors } from "../assets/colors";
 
 const Navbar = () => {
   const { user_name = "shreeramk" } = useParams();
@@ -35,6 +36,7 @@ const Navbar = () => {
         <Divider
           direction="vertical"
           length={1.5}
+          color={colors.primary.dark}
           className="md:block hidden"
         />
         <IconDropdown icon={plusIcon} className="md:flex hidden" />
@@ -56,7 +58,7 @@ const Navbar = () => {
         <img
           src={user?.avatar_url}
           alt="logo"
-          className="w-8 h-8 ml-auto rounded-full"
+          className="w-8 h-8 ml-auto rounded-full cursor-pointer"
         />
       </span>
     </div>

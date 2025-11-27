@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-
-const avatarColors = ["#74B3C1", "#E68A93", "#81C784", "#D9C179"];
+import { highlightColors as avatarColors } from "../assets/colors";
 
 const Badge = ({
   image,
