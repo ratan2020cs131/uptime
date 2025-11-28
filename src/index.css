@@ -106,3 +106,17 @@
 .scroll-on-scroll:active {
   scrollbar-color: #88888870 #f0f0f0;
 }
+
+/* ECharts tooltip styling - ensure it appears on top and doesn't cause scrolling */
+div[id*="echarts"] {
+  position: relative;
+  overflow: visible !important;
+}
+
+.echarts-tooltip,
+div[id*="echarts"] .echarts-tooltip {
+  position: absolute !important;
+  z-index: 9999 !important;
+  pointer-events: none;
+  max-width: none !important;
+}

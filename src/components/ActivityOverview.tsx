@@ -73,21 +73,21 @@ const ActivityOverview = ({ username, year }: ActivityOverviewProps) => {
           {
             name:
               reviewPercent > 0
-                ? `${reviewPercent}% Code review`
+                ? `${reviewPercent}%\nCode review`
                 : "Code review",
             max: maxValue,
           },
           {
-            name: commitPercent > 0 ? `${commitPercent}% Commits` : "Commits",
+            name: commitPercent > 0 ? `${commitPercent}%\nCommits` : "Commits",
             max: maxValue,
           },
           {
             name:
-              prPercent > 0 ? `${prPercent}% Pull requests` : "Pull requests",
+              prPercent > 0 ? `${prPercent}%\nPull requests` : "Pull requests",
             max: maxValue,
           },
           {
-            name: issuePercent > 0 ? `${issuePercent}% Issues` : "Issues",
+            name: issuePercent > 0 ? `${issuePercent}%\nIssues` : "Issues",
             max: maxValue,
           },
         ],
@@ -134,6 +134,41 @@ const ActivityOverview = ({ username, year }: ActivityOverviewProps) => {
         textStyle: {
           color: "#fff",
           fontSize: 12,
+        },
+        extraCssText: "white-space: normal;",
+        formatter: (params: any) => {
+          if (!params) {
+            return "";
+          }
+          // For radar charts, params can be an array or a single object
+          const param = Array.isArray(params) ? params[0] : params;
+          if (!param || !param.value) {
+            return "";
+          }
+
+          const indicatorNames = [
+            "Code review",
+            "Commits",
+            "Pull requests",
+            "Issues",
+          ];
+          const values = param.value || [];
+          const total =
+            activityStats.totalCommitContributions +
+            activityStats.totalIssueContributions +
+            activityStats.totalPullRequestContributions +
+            activityStats.totalPullRequestReviewContributions;
+
+          const rows = indicatorNames
+            .map((name, index) => {
+              const value = values[index] || 0;
+              const percent = total > 0 ? Math.round((value / total) * 100) : 0;
+              const label = percent > 0 ? `${percent}% ${name}` : name;
+              return `<tr><td style="text-align: left; padding-right: 10px; color: #fff;">${label}</td><td style="text-align: right; color: #fff;">${value}</td></tr>`;
+            })
+            .join("");
+          
+          return `<table style="width: 100%;">${rows}</table>`;
         },
       },
     };

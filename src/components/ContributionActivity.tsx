@@ -78,23 +78,42 @@ const ContributionActivity = ({
                     {activity.commitContributionsByRepository.map(
                       (repo, idx) => (
                         <div key={idx} className="text-sm mt-1.5">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="font-semibold text-primary">
+                          <p className="text-primary-dark text-[0.8rem] leading-[1rem]">
+                            <b>
                               {repo.contributions.totalCount.toLocaleString()}{" "}
                               commit
-                              {repo.contributions.totalCount !== 1 ? "s" : ""}
-                            </span>
-                            <span className="text-primary-dark">in</span>
+                              {repo.contributions.totalCount !== 1
+                                ? "s"
+                                : ""}{" "}
+                            </b>
+                            in{" "}
                             <a
                               href={`https://github.com/${repo.repository.owner.login}/${repo.repository.name}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="hover:text-primary-link underline text-primary-dark"
+                              className="underline inline hover:text-primary-link active:text-primary-link"
                             >
                               {repo.repository.owner.login}/
                               {repo.repository.name}
                             </a>
-                          </div>
+                          </p>
+                          {/* <p className="flex items-center gap-2 mb-1">
+                            <p className="font-semibold text-primary inline">
+                              {repo.contributions.totalCount.toLocaleString()}{" "}
+                              commit
+                              {repo.contributions.totalCount !== 1 ? "s" : ""}
+                            </p>
+                            in
+                            <a
+                              href={`https://github.com/${repo.repository.owner.login}/${repo.repository.name}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-primary-link underline text-primary-dark inline"
+                            >
+                              {repo.repository.owner.login}/
+                              {repo.repository.name}
+                            </a>
+                          </p> */}
                         </div>
                       )
                     )}

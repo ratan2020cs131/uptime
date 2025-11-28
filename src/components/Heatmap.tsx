@@ -1,4 +1,6 @@
 import useGetContributions from "../api/useGetContributions";
+import useGetContributionActivity from "../api/useGetContributionActivity";
+import useGetActivityOverview from "../api/useGetActivityOverview";
 import ReactECharts from "echarts-for-react";
 import { useMemo } from "react";
 import ActivityOverview from "./ActivityOverview";
@@ -18,6 +20,8 @@ interface ContributionWeek {
 
 const Heatmap = ({ year, user_name }: { year: number; user_name: string }) => {
   const { data: contributionCalendar } = useGetContributions(user_name, year);
+  const { data: contributionActivity } = useGetContributionActivity(user_name, year);
+  const { data: activityStats } = useGetActivityOverview(user_name, year);
 
   const chartData = useMemo(() => {
     if (!contributionCalendar?.weeks) return [];
@@ -36,14 +40,70 @@ const Heatmap = ({ year, user_name }: { year: number; user_name: string }) => {
     return Math.max(...chartData.map(([_, count]) => count));
   }, [chartData]);
 
+  const hasContributedToData = useMemo(() => {
+    return (
+      contributionActivity &&
+      contributionActivity.commitContributionsByRepository.length > 0
+    );
+  }, [contributionActivity]);
+
+  const hasActivityOverviewData = useMemo(() => {
+    if (!activityStats) return false;
+    const total =
+      activityStats.totalCommitContributions +
+      activityStats.totalIssueContributions +
+      activityStats.totalPullRequestContributions +
+      activityStats.totalPullRequestReviewContributions;
+    return total > 0;
+  }, [activityStats]);
+
+  const shouldShowSection = hasContributedToData || hasActivityOverviewData;
+
   const option = {
     tooltip: {
-      position: "top",
+      position: function (
+        point: number[],
+        _params: any,
+        _dom: HTMLElement,
+        _rect: any,
+        size: any
+      ) {
+        // Position tooltip above the point, but adjust if it would go off screen
+        const [x, y] = point;
+        const tooltipWidth = size.contentSize[0];
+        const tooltipHeight = size.contentSize[1];
+        const viewWidth = size.viewSize[0];
+
+        // Try to position above the point
+        let posX = x - tooltipWidth / 2;
+        let posY = y - tooltipHeight - 10;
+
+        // Adjust if tooltip would go off the left edge
+        if (posX < 10) {
+          posX = 10;
+        }
+        // Adjust if tooltip would go off the right edge
+        if (posX + tooltipWidth > viewWidth - 10) {
+          posX = viewWidth - tooltipWidth - 10;
+        }
+        // If tooltip would go off the top, position it below instead
+        if (posY < 10) {
+          posY = y + 10;
+        }
+
+        return [posX, posY];
+      },
+      confine: false,
       formatter: (params: any) => {
         const count = params.data[1];
         const date = new Date(params.data[0]);
-        const formattedDate = date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
-        return `${count} contribution${count !== 1 ? "s" : ""} on ${formattedDate}`;
+        const formattedDate = date.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+        });
+        return `${count} contribution${
+          count !== 1 ? "s" : ""
+        } on ${formattedDate}`;
       },
       backgroundColor: "rgba(0, 0, 0, 0.8)",
       borderColor: "transparent",
@@ -108,15 +168,20 @@ const Heatmap = ({ year, user_name }: { year: number; user_name: string }) => {
   };
 
   return (
-    <div className="border border-secondary-dark rounded-md overflow-x-auto">
+    <div className="border border-secondary-dark rounded-md overflow-x-auto overflow-y-visible">
       <>
         {chartData.length > 0 ? (
           <div className="p-3">
-            <div className="overflow-x-auto scroll-on-scroll">
+            <div className="overflow-x-auto overflow-y-visible scroll-on-scroll">
               <div style={{ minWidth: "700px" }}>
                 <ReactECharts
                   option={option}
-                  style={{ height: "120px", width: "100%" }}
+                  style={{
+                    height: "120px",
+                    width: "100%",
+                    position: "relative",
+                    zIndex: 1,
+                  }}
                   opts={{ renderer: "canvas" }}
                 />
               </div>
@@ -156,28 +221,32 @@ const Heatmap = ({ year, user_name }: { year: number; user_name: string }) => {
         )}
 
         {/* Activity overview section */}
-        <CustomDivider
-          direction="horizontal"
-          fullLength
-          color={colors.secondary.dark}
-        />
-
-        <div className="p-3">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2px_1fr] gap-4">
-            <div>
-              <ContributedTo username={user_name} year={year} />
-            </div>
+        {shouldShowSection && (
+          <>
             <CustomDivider
-              direction="vertical"
+              direction="horizontal"
               fullLength
               color={colors.secondary.dark}
-              className="hidden lg:block"
             />
-            <div>
-              <ActivityOverview username={user_name} year={year} />
+
+            <div className="p-3">
+              <div className="flex flex-col lg:flex-row gap-4 w-full">
+                <div className="w-full lg:w-1/2">
+                  <ContributedTo username={user_name} year={year} />
+                </div>
+                <CustomDivider
+                  direction="vertical"
+                  length={12}
+                  color={colors.secondary.dark}
+                  className="hidden lg:flex"
+                />
+                <div className="w-full lg:w-1/2">
+                  <ActivityOverview username={user_name} year={year} />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </>
     </div>
   );
